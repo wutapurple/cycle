@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>CYCLE</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Old+Standard+TT&display=swap&subset=cyrillic" rel="stylesheet">
+  </head>
+  <style>
+    body  {
+      font-family: 'Courier New', Courier, monospace;
+      background: linear-gradient(90deg, #aea4e3, #d3ffe8);
+      padding: 5%;
+      display: flex;
+      width: auto;
+      font-size: 180%;
+    }
+    div {
+      display: block;
+      margin: auto;
+      text-align: center;
+    }
+    label {
+      margin: 20px;
+    }
+    .number {
+      outline: none;
+    }
+    .info {
+      font-family: 'Courier New', Courier, monospace;
+      margin: 25px;
+      width: 20%;
+      height: 2em;
+      font-size: 35px;
+      text-align: center;
+      border: 2px solid cornflowerblue;
+      box-shadow: 1px 1px 5px 0 darkcyan;
+      outline: none;
+    }
+    button  {
+      font-family: 'Courier New', Courier, monospace;
+      margin: 10px;
+      border: 2px solid rgba(21, 144, 148, 0.678);
+      border-radius: 0.15em;
+      width: 65%;
+      height: 3em;
+      font-size: 1.1em;
+      background-color: rgba(122, 177, 228, 0.685);
+      outline: none;
+      box-shadow: 0 0 7px 1px rgba(21, 144, 148, 0.5);
+    }
+    button:hover  {
+      background-color: rgba(122, 177, 228, 0.959);
+    }
+    button:active {
+      box-shadow: 0 0 4px 2px rgba(21, 144, 148, 0.678) inset;
+    }
+  </style>
+  <body>
+    <div>
+      <label for="number">Сколько циклов нужно прибавить?(0-5)</label>
+      <br>
+      <input class="number" type="range" min="0" max="5" id="number" name="number" inputmode="numeric" pattern="[0-5]{1}" value="1" autofocus>
+      <input class="info" type="text" value="1" disabled>
+      <br>
+      <button class="btn" name="btn" id="btn">
+        Посчитать!
+      </button>
+    </div>
+  </body>
+  <script>
+    let number = document.querySelector(".number");
+    let btn = document.querySelector(".btn");
+    let info = document.querySelector(".info");
+    
+    number.oninput = function() {
+      info.value = number.value;
+    }
+
+    btn.onclick = function()    {
+      function alarm(cycle) {
+        let now = new Date();
+        cycle *= 100;
+        let hours = Math.floor(cycle / 60) + now.getHours();
+        let minutes = cycle % 60 + now.getMinutes() + 7;
+        if (minutes >= 60)   {
+            hours += Math.floor(minutes / 60);
+            minutes = minutes % 60;
+        }
+        if (hours >= 24)   {
+            hours -= 24;
+        }
+        if (hours < 10)   {
+            hours = "0" + hours;
+        }
+        if (minutes < 10)   {
+            minutes = "0" + minutes;
+        }
+        let target = hours + ":" + minutes;
+        return target;
+      }
+      btn.textContent = alarm(number.value);
+    }
+  </script>
+</html>
